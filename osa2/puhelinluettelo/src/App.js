@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import personService from './services/persons'
 import Persons from './components/Person'
 import Filter from './components/Filter'
@@ -16,11 +15,11 @@ const App = () => {
 
   useEffect(() => {
     console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
+    personService
+      .getAll()
       .then(response => {
         console.log('promise fulfilled')
-        setPersons(response.data)
+        setPersons(response)
       })
   }, [])
   
@@ -86,6 +85,14 @@ const App = () => {
             }, 3000)
             setNewName('')
             setNewNumber('')
+          })
+          .catch(error => {
+            console.log('error')
+            console.log(error.response.data)
+            setMessage('Name must be atleast the minimum required lenght (3) or number must be in correct form i.e. 09-654321 or 040-12345')
+            setTimeout(() => {
+              setMessage(null)
+            }, 5000)
           })
         }
     }
