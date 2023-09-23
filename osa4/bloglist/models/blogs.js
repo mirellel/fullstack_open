@@ -1,11 +1,10 @@
 
 const mongoose = require('mongoose')
-require('dotenv').config()
-
+const config = require('../utils/config')
 
 mongoose.set('strictQuery', false)
 
-const mongoUrl = process.env.MONGODB_URI
+const mongoUrl = config.MONGODB_URI
   
 mongoose.connect(mongoUrl)
   .then(() => {
